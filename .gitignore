@@ -34,4 +34,3 @@ npm-debug.log
 # Configuration
 config/config.js
 wulu/build/mongo.js
-wulu/build/mongo.js
