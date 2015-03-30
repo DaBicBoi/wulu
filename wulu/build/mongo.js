@@ -19,7 +19,7 @@ module.exports = {
  */
 
 function connect_database() {
-  var url = process.env.MONGODB || "mongodb://localhost:27017/ps";
+  var url = process.env.MONGODB || "mongodb://<dbuser>:<dbpassword>@ds031278.mongolab.com:31278/infinite";
   mongoose.connect(url);
   mongoose.connection.on("error", function () {
     return console.error(chalk.red("MongoDB Connection Error. Make sure MongoDB is running."));
