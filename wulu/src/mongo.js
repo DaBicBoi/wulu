@@ -10,10 +10,12 @@ export default {
 
 /**
  * Connect to MongoDB Database.
+ *
+ * @param {String} db
  */
 
-function connect_database() {
-  let url = process.env.MONGODB || 'mongodb://localhost:27017/ps';
+function connect_database(db='mongodb://localhost:27017/ps') {
+  let url = process.env.MONGODB || db;
   mongoose.connect(url);
   mongoose.connection.on('error', () => console.error(chalk.red('MongoDB Connection Error. Make sure MongoDB is running.')) );
 }
@@ -28,7 +30,7 @@ function connect_database() {
 function importUsergroups(usergroups, Config) {
   User.find({}, (err, users) => {
     if (err) return;
-    users.forEach((user) => usergroups[user.name] =  (user.group || Config.groupsranking[0]) + user.name );
+    users.forEach((user) => usergroups[user.name] = (user.group || Config.groupsranking[0]) + user.name);
   });
 }
 
@@ -48,7 +50,7 @@ function exportUsergroups(usergroups) {
   }
   users.forEach((user) => {
     User.findOne({ name: user.name.toLowerCase() }, (err, userModel) => {
-      if (err) return; 
+      if (err) return;
       if (!userModel) {
         user = new User({
           name: user.name,

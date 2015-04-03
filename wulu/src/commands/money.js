@@ -3,17 +3,17 @@ import Economy from '../economy';
 
 export default money;
 
+let currency_name = Economy.currency_name;
+
 /**
  * Handle money commands from Economy.
- *
- * @param {String} currency_name
  */
 
-function money(currency_name='buck') {
+function money() {
   let commands = {
     atm: 'wallet',
     purse: 'wallet',
-    wallet(target, room, user) {
+    wallet(target, room) {
       if (!this.canBroadcast()) return;
       let targetUser = this.targetUserOrSelf(target);
       let currency = currency_name;
@@ -90,6 +90,7 @@ function money(currency_name='buck') {
         if (amount > userAmount) return self.sendReply('You cannot transfer more money than what you have.');
         Economy.give(targetName.toLowerCase(), amount, function(targetTotal) {
           Economy.take(user.name.toLowerCase(), amount, function(userTotal) {
+            if (!userTotal) return self.sendReply('Cannot take anymore money from this user.');
             let targetCash = targetTotal >= 2 ? currency_name + 's' : currency_name;
             let userCash = userTotal >= 2 ? currency_name + 's' : currency_name;
             self.sendReply(`You have successfully transferred ${amount} ${currency} to ${targetName}. You now have ${userTotal} ${userCash}.`);

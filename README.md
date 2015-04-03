@@ -1,16 +1,50 @@
-# wulu
+# wulu [![Build Status][travis-link]][travis-img] [![Dependency Status][deps-link]][deps-img] [![devDependency Status][dev-link]][dev-img]
+
+[travis-link]: https://travis-ci.org/FakeSloth/wulu.svg?branch=master
+[travis-img]: https://travis-ci.org/FakeSloth/wulu
+[deps-link]: https://david-dm.org/FakeSloth/wulu.svg
+[deps-img]: https://david-dm.org/FakeSloth/wulu
+[dev-link]: https://david-dm.org/FakeSloth/wulu/dev-status.svg
+[dev-img]: https://david-dm.org/FakeSloth/wulu#info=devDependencies
 
 Extentions and plugins for Pokemon Showdown
+
+# Getting Started
+
+wulu requires a [MongoDB](http://www.mongodb.com) database to work.
+Open a new command prompt or terminal and type this in:
+
+```bash
+$ mongod
+```
+
+Then open another command prompt and terminal and type this in:
+
+```bash
+$ git clone https://github.com/FakeSloth/wulu.git
+$ cd wulu && npm install
+$ node app.js
+```
 
 # Documentation
 
 Wulu is contain in modules. Currently, there are 4 modules: `Bot`, `Mongo`,
-`Commands`, and `Emoticons`.
+`Commands`, and `Emoticons`. In addition to `Economy`.
+
+### Economy
+
+To set a __currency_name__ for you Economy, do this:
+
+```js
+Wulu.Economy.currency_name = 'goats';
+```
 
 ### Mongo
 
 Mongo contains functions to interact with a MongoDB database. The first
-function `connect_database` connects to a MongoDB database. 
+function `connect_database` connects to a MongoDB database. It has an optional
+parameter where you can put in a database url that is store elsewhere such as
+[mongolab](https://mongolab.com).
 `importUsergroups` and `exportUsergroups` are MongoDB replacements of the
 original csv version of importUsergroups and exportUsergroups.
 
