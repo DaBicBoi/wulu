@@ -1,10 +1,14 @@
-"use strict";
+'use strict';
 
-var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj['default'] : obj; };
 
-var User = _interopRequire(require("./user"));
+var _User = require('./user');
+
+var User = _interopRequire(_User);
 
 module.exports = {
+
+  currency_name: 'buck',
 
   /**
    * Get a user money amount
@@ -15,7 +19,7 @@ module.exports = {
    * })
    *
    * @param {String} name
-   * @param {Function} callback 
+   * @param {Function} callback
    */
   get: function get(name, callback) {
     User.findOne({ name: name }, function (err, user) {
@@ -41,14 +45,14 @@ module.exports = {
           money: amount
         });
         return user.save(function (err) {
-          if (err) return callback(0);
-          callback(user.money);
+          if (err) return;
+          if (callback) callback(user.money);
         });
       }
       user.money += amount;
       user.save(function (err) {
-        if (err) return callback(0);
-        callback(user.money);
+        if (err) return;
+        if (callback) callback(user.money);
       });
     });
   },
@@ -65,11 +69,11 @@ module.exports = {
   take: function take(name, amount, callback) {
     User.findOne({ name: name }, function (err, user) {
       if (err) return;
-      if (!user) return callback(0);
+      if (!user) return;
       user.money -= amount;
       user.save(function (err) {
-        if (err) return callback(0);
-        callback(user.money);
+        if (err) return;
+        if (callback) callback(user.money);
       });
     });
   }

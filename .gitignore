@@ -1,5 +1,6 @@
 #####=== Node ===#####
-
+config/config.js
+wulu/build/mongo.js
 # Logs
 logs
 *.log
@@ -33,3 +34,4 @@ npm-debug.log
 
 # Configuration
 config/config.js
+wulu/build/mongo.js

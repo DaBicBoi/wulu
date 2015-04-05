@@ -2,6 +2,8 @@ import User from './user';
 
 export default {
 
+  currency_name: 'buck',
+
   /**
    * Get a user money amount
    *
@@ -11,7 +13,7 @@ export default {
    * })
    *
    * @param {String} name
-   * @param {Function} callback 
+   * @param {Function} callback
    */
   get(name, callback) {
     User.findOne({ name: name }, (err, user) => {
@@ -37,14 +39,14 @@ export default {
           money: amount
         });
         return user.save((err) => {
-          if (err) return callback(0);
-          callback(user.money);
+          if (err) return;
+          if (callback) callback(user.money);
         });
       }
       user.money += amount;
       user.save((err) => {
-        if (err) return callback(0); 
-        callback(user.money);
+        if (err) return;
+        if (callback) callback(user.money);
       });
     });
   },
@@ -61,11 +63,11 @@ export default {
   take(name, amount, callback) {
     User.findOne({ name: name }, (err, user) => {
       if (err) return;
-      if (!user) return callback(0);
+      if (!user) return;
       user.money -= amount;
       user.save((err) => {
-        if (err) return callback(0); 
-        callback(user.money);
+        if (err) return;
+        if (callback) callback(user.money);
       });
     });
   }

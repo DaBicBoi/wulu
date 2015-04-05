@@ -1,18 +1,34 @@
-"use strict";
+'use strict';
 
-var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj['default'] : obj; };
 
-var Bot = _interopRequire(require("./build/bot"));
+var _Bot = require('./build/bot');
 
-var Commands = _interopRequire(require("./build/commands"));
+var Bot = _interopRequire(_Bot);
 
-var Emoticons = require("./build/emoticons").Emoticons;
+var _Commands = require('./build/commands');
 
-var Mongo = _interopRequire(require("./build/mongo"));
+var Commands = _interopRequire(_Commands);
+
+var _Economy = require('./build/economy');
+
+var Economy = _interopRequire(_Economy);
+
+var _Emoticons = require('./build/emoticons');
+
+var _Mongo = require('./build/mongo');
+
+var Mongo = _interopRequire(_Mongo);
+
+var _Tour = require('./build/tour');
+
+var Tour = _interopRequire(_Tour);
 
 module.exports = {
   Bot: Bot,
   Commands: Commands,
-  Emoticons: Emoticons,
-  Mongo: Mongo
+  Economy: Economy,
+  Emoticons: _Emoticons.Emoticons,
+  Mongo: Mongo,
+  Tour: Tour
 };

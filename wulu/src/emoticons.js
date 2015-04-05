@@ -1,4 +1,4 @@
-import color from './color';
+import color from '../color';
 import is from 'is_js';
 
 let emotes = {
@@ -23,6 +23,7 @@ let emotes = {
   'oshit': 'http://i.imgur.com/yr5DjuZ.png',
   'PJSalt': 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-18be1a297459453f-36x30.png',
   'SwiftRage': 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-680b6b3887ef0d17-21x28.png',
+  'wtf1': 'http://i.imgur.com/kwR8Re9.png',
   'xa': 'http://i.imgur.com/V728AvL.png'
 };
 
@@ -81,7 +82,7 @@ function Emoticons(_emotes=emotes) {
     room.addRaw(`<div class="chat"><small>${user.group}</small><button name="parseCommand" value="/user ${user.name}" class=".emote-chat"><b><font color="${color(user.userid)}">${user.name}:</font></b></button><em class="mine">${message}</div>`);
 
     return false;
-  }
+  };
 }
 
 function createPatternRegex() {
@@ -90,7 +91,7 @@ function createPatternRegex() {
 
   for (let i in emotes) {
     if (emotes.hasOwnProperty(i)) {
-      patterns.push('(' + i.replace(metachars, "\\$&") + ')');
+      patterns.push('(' + i.replace(metachars, '\\$&') + ')');
     }
   }
 

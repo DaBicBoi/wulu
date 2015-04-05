@@ -336,7 +336,7 @@ global.string = function (str) {
 
 global.LoginServer = require('./loginserver.js');
 
-global.Wulu = require('./wulu/index');
+global.Wulu = require('./wulu');
 
 // Connect to MongoDB.
 Wulu.Mongo.connect_database();
@@ -430,3 +430,4 @@ require('./repl.js').start('app', function (cmd) { return eval(cmd); });
 
 Wulu.Commands.init();
 Wulu.Emoticons();
+Wulu.Tour();
