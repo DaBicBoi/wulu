@@ -1,3 +1,32 @@
+1.6.0
+==================
+
+  * Add /regdate command
+  * Add /define and /urbandefine commands
+  * Fix wallet command querying name
+
+1.5.0 / 2015-04-03
+==================
+
+  * Add Polls
+  * Refactor commands
+  * Add Reload command
+  * Fix eval permissions
+  * Add Sysop
+  * Add `commands` command for help
+  * Add alias command
+
+1.4.2 / 2015-04-02
+==================
+
+  * Fix `wallet` command
+
+1.4.1 / 2015-04-02
+==================
+
+  * Change default tour color
+  * Fix line feed at the end of `app.js`
+
 1.4.0 / 2015-04-02
 ==================
 

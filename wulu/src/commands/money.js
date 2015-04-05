@@ -13,13 +13,14 @@ function money() {
   let commands = {
     atm: 'wallet',
     purse: 'wallet',
-    wallet(target, room) {
+    wallet(target, room, user) {
       if (!this.canBroadcast()) return;
-      let targetUser = this.targetUserOrSelf(target);
-      let currency = currency_name;
-      Economy.get(targetUser.name.toLowerCase(), function(amount) {
+      let name = target.toLowerCase();
+      if (!name) name = user.name.toLowerCase();
+      Economy.get(name, function(amount) {
+        let currency = currency_name;
         if (amount >= 2) currency += 's';
-        this.sendReplyBox(`${targetUser.name} has ${amount} ${currency}.`);
+        this.sendReplyBox(`${target || user.name} has ${amount} ${currency}.`);
         room.update();
       }.bind(this));
     },
@@ -27,7 +28,7 @@ function money() {
     'generatemoney': 'givemoney',
     givemoney(target, room, user) {
       if (!user.can('givemoney')) return;
-      if (!target || target.indexOf(',') < 0) return this.parse('/help givemoney');
+      if (!target || target.indexOf(',') < 0) return this.sendReply('/givemoney [user], [amount] - Give a user a certain amount of money.');
 
       let parts = target.split(',');
       this.splitTarget(parts[0]);
@@ -49,7 +50,7 @@ function money() {
 
     takemoney(target, room, user) {
       if (!user.can('takemoney')) return;
-      if (!target || target.indexOf(',') < 0) return this.parse('/help takemoney');
+      if (!target || target.indexOf(',') < 0) return this.sendReply('/takemoney [user], [amount] - Take a certain amount of money from a user.');
 
       let parts = target.split(',');
       this.splitTarget(parts[0]);
@@ -71,7 +72,7 @@ function money() {
 
     transfer: 'transfermoney',
     transfermoney(target, room, user) {
-      if (!target || target.indexOf(',') < 0) return this.parse('/help takemoney');
+      if (!target || target.indexOf(',') < 0) return this.sendReply('/transfer [user], [amount] - Transfer a certain amount of money to a user.');
 
       let parts = target.split(',');
       this.splitTarget(parts[0]);

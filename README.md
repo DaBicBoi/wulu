@@ -9,24 +9,48 @@
 
 Extentions and plugins for Pokemon Showdown
 
-# Getting Started
+Table of Contents
+-----------------
 
-wulu requires a [MongoDB](http://www.mongodb.com) database to work.
-Open a new command prompt or terminal and type this in:
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Documentation](#documentation)
+- [Versioning](#versioning)
+- [License](#license)
+
+Prerequisites
+-------------
+
+<img src="http://nodejs.org/images/logos/nodejs.png" height="50"> [Node.js](http://nodejs.org)
+
+<img src="http://www.mongodb.com/sites/mongodb.com/files/media/mongodb-logo-rgb.jpeg" height="50"> [MongoDB](http://www.mongodb.org/downloads)
+
+Getting Started
+---------------
+
+The easiest way to get started is to clone the repository:
+
+```bash
+$ git clone https://github.com/FakeSloth/wulu.git
+$ cd wulu
+$ npm install
+```
+
+wulu requires [MongoDB](http://www.mongodb.com). Open up
+another command prompt or terminal:
 
 ```bash
 $ mongod
 ```
 
-Then open another command prompt and terminal and type this in:
+Then go back to the other terminal or command prompt to start up the server:
 
 ```bash
-$ git clone https://github.com/FakeSloth/wulu.git
-$ cd wulu && npm install
 $ node app.js
 ```
 
-# Documentation
+Documentation
+-------------
 
 Wulu is contain in modules. Currently, there are 4 modules: `Bot`, `Mongo`,
 `Commands`, and `Emoticons`. In addition to `Economy`.
@@ -133,7 +157,8 @@ To make the username look like the chat when using emoticons, put this in your c
 }
 ```
 
-## Versioning
+Versioning
+----------
 
 ### 2.x.x
 
@@ -149,6 +174,7 @@ of lots of bugs or glitches.
 
 This is the version where the official Pokemon Showdown main repository left off at.
 
-# License
+License
+-------
 
 [MIT](LICENSE)
