@@ -1,3 +1,13 @@
+1.6.2 / 2015-04-05
+==================
+
+  * Fix usergroups not applying to usernames with spaces
+
+1.6.1 / 2015-04-04
+==================
+
+  * Add broadcast to /wulu and /fakesloth commands
+
 1.6.0 / 2015-04-04
 ==================
 
