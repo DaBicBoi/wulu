@@ -22,6 +22,7 @@ var currency_name = _Economy2['default'].currency_name;
  *
  * @param {Array} shop
  */
+
 function shop() {
   var shop = arguments[0] === undefined ? shop_data : arguments[0];
 
@@ -117,6 +118,7 @@ function shop() {
  * @param {Array} shop
  * @return {String} display
  */
+
 function getShopDisplay(shop) {
   var display = '<table border="1" cellspacing="0" cellpadding="5" width="100%">\n            <tbody>\n              <tr>\n                <th>Command</th>\n                <th>Description</th>\n                <th>Cost</th>\n            </tr>'.replace(/(\r\n|\n|\r)/gm, '');
 
