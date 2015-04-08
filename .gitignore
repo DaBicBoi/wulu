@@ -1,6 +1,10 @@
 #####=== Node ===#####
 config/config.js
 wulu/build/mongo.js
+config/chatrooms.json
+config/custom.css
+config/usergroups.csv
+
 # Logs
 logs
 *.log
