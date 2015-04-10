@@ -29,6 +29,7 @@ var emotes = {
   feelsmd: 'http://i.imgur.com/DJHMdSw.png',
   feelsnv: 'http://i.imgur.com/XF6kIdJ.png',
   feelsok: 'http://i.imgur.com/gu3Osve.png',
+  feelspink: 'http://i.imgur.com/jqfB8Di.png',
   feelsrs: 'http://i.imgur.com/qGEot0R.png',
   feelssc: 'http://i.imgur.com/cm6oTZ1.png',
   fukya: 'http://i.imgur.com/ampqCZi.gif',
@@ -36,9 +37,10 @@ var emotes = {
   niglol: 'http://i.imgur.com/SlzCghq.png',
   oshit: 'http://i.imgur.com/yr5DjuZ.png',
   PJSalt: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-18be1a297459453f-36x30.png',
+  Sanic: 'http://i.imgur.com/Y6etmna.png',
   SwiftRage: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-680b6b3887ef0d17-21x28.png',
   wtf1: 'http://i.imgur.com/kwR8Re9.png',
-  xa: 'http://i.imgur.com/V728AvL.png'
+  xD: 'http://i.imgur.com/V728AvL.png'
 };
 
 var emotes_keys = Object.keys(emotes);
@@ -52,14 +54,6 @@ exports['default'] = {
 
 /**
  * Emoticons
- * To make the button username appear as normal, in your css:
- * .emote-chat {
- *   background: none;
- *   border: 0;
- *   padding: 0 5px 0 0;
- *   cursor: pointer;
- *   font-family: Verdana;
- * }
  *
  * @param {Object} _emotes
  */
@@ -72,6 +66,8 @@ function Emoticons() {
   }
 
   CommandParser.parse = function (message, room, user, connection, levelsDeep) {
+    if (message.substr(0, 3) === '/pm') return CommandParser.originalParse(message, room, user, connection, levelsDeep);
+
     var match = false;
     var len = emotes_keys.length;
 
@@ -84,7 +80,10 @@ function Emoticons() {
 
     if (!match) return CommandParser.originalParse(message, room, user, connection, levelsDeep);
 
+    // escape HTML
     message = Tools.escapeHTML(message);
+
+    // emoticons
     message = message.replace(patternRegex, function (match) {
       var emote = _emotes[match];
       return _is2['default'].string(emote) ? '<img src="' + emote + '" title="' + match + '" />' : match;
@@ -96,7 +95,7 @@ function Emoticons() {
     // **bold**
     message = message.replace(/\*\*([^< ](?:[^<]*?[^< ])?)\*\*/g, '<b>$1</b>');
 
-    room.addRaw('<div class="chat"><small>' + user.group + '</small><button name="parseCommand" value="/user ' + user.name + '" class=".emote-chat"><b><font color="' + _color2['default'](user.userid) + '">' + user.name + ':</font></b></button><em class="mine">' + message + '</div>');
+    room.addRaw('<div class="chat"><small>' + (user.customSymbol || user.group) + '</small><button name="parseCommand" value="/user ' + user.name + '" class="emote-chat"><b><font class="emote-pointer" color="' + _color2['default'](user.userid) + '">' + user.name + ':</font></b></button><em class="mine">' + message + '</div>');
 
     return false;
   };

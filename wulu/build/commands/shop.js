@@ -15,7 +15,6 @@ exports['default'] = shop;
 var shop_data = [['Symbol', 'Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary until restart, certain symbols are blocked)', 5], ['Fix', 'Buys the ability to alter your current custom avatar or trainer card. (don\'t buy if you have neither)', 10], ['Poof', 'Buy a poof message to be added into the pool of possible poofs.', 15], ['Who', 'Buys a custom whois bot message for your name.', 25], ['Avatar', 'Buys an custom avatar to be applied to your name (You supply. Images larger than 80x80 may not show correctly)', 30], ['Trainer', 'Buys a trainer card which shows information through a command.', 50], ['Room', 'Buys a chatroom for you to own. (within reason, can be refused)', 100]];
 
 var global_shop = getShopDisplay(shop_data);
-var currency_name = _Economy2['default'].currency_name;
 
 /**
  * Shop where user can buy stuff with money.
@@ -45,6 +44,7 @@ function shop() {
           if (target.toLowerCase() !== shop[len][0].toLowerCase()) return 'continue';
           match = true;
           var price = shop[len][2];
+          var currency_name = Wulu.Economy.currency_name;
           var item_currency = price - money >= 2 ? currency_name + 's' : currency_name;
           if (price > money) {
             return {
@@ -87,10 +87,11 @@ function shop() {
         return this.sendReply('/customsymbol [symbol] - Get a custom symbol.');
       }if (target.match(/[A-Za-z\d]+/g) || '?!+%@★&~#'.indexOf(target) >= 0) {
         return this.sendReply('Sorry, but you cannot change your symbol to this for safety/stability reasons.');
-      }user.oldGetIdentity = user.getIdentity;
+      }user.customSymbol = target;
+      user.oldGetIdentity = user.getIdentity;
       user.getIdentity = function (roomid) {
         var name = this.oldGetIdentity(roomid);
-        return target + name.slice(1);
+        return this.customSymbol + name.slice(1);
       };
       user.updateIdentity();
       user.canCustomSymbol = false;
@@ -103,6 +104,7 @@ function shop() {
       }user.getIdentity = function (roomid) {
         return this.oldGetIdentity(roomid);
       };
+      user.customSymbol = null;
       user.updateIdentity();
       user.hasCustomSymbol = false;
       this.sendReply('Your symbol has been reset.');

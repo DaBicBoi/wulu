@@ -7,3 +7,4 @@ services:
 cache:
   directories:
     - node_modules
+    - gulp-cache

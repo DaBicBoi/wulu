@@ -3,8 +3,6 @@ import Economy from '../economy';
 
 export default money;
 
-let currency_name = Economy.currency_name;
-
 /**
  * Handle money commands from Economy.
  */
@@ -18,7 +16,7 @@ function money() {
       let name = target.toLowerCase();
       if (!name) name = user.name.toLowerCase();
       Economy.get(name, function(amount) {
-        let currency = currency_name;
+        let currency = Wulu.Economy.currency_name;
         if (amount >= 2) currency += 's';
         this.sendReplyBox(`${target || user.name} has ${amount} ${currency}.`);
         room.update();
@@ -33,7 +31,8 @@ function money() {
       let parts = target.split(',');
       this.splitTarget(parts[0]);
       let amount = Number(parts[1].trim());
-      let currency = currency_name;
+      let currency = Wulu.Economy.currency_name;
+      let currency_name = Wulu.Economy.currency_name;
 
       if (!this.targetUser) return this.sendReply(`User ${this.targetUsername} not found.`);
       if (is.not.number(amount)) return this.sendReply('Must be a number.');
@@ -55,7 +54,8 @@ function money() {
       let parts = target.split(',');
       this.splitTarget(parts[0]);
       let amount = Number(parts[1].trim());
-      let currency = currency_name;
+      let currency = Wulu.Economy.currency_name;
+      let currency_name = Wulu.Economy.currency_name;
 
       if (!this.targetUser) return this.sendReply(`User ${this.targetUsername} not found.`);
       if (is.not.number(amount)) return this.sendReply('Must be a number.');
@@ -77,8 +77,9 @@ function money() {
       let parts = target.split(',');
       this.splitTarget(parts[0]);
       let amount = Number(parts[1].trim());
-      let currency = currency_name;
+      let currency = Wulu.Economy.currency_name;
       let targetName = this.targetUsername;
+      let currency_name = Wulu.Economy.currency_name;
 
       if (!this.targetUser) return this.sendReply(`User ${targetName} not found.`);
       if (is.not.number(amount)) return this.sendReply('Must be a number.');

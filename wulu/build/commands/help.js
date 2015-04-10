@@ -9,18 +9,17 @@ function check(arr, target) {
   return arr.indexOf(target) >= 0;
 }
 
+var display = '<center><b>List of commands:</b></center>\n              <b>/alias</b> <i>command</i> - Get all aliases of a command.\n              <b>/away</b> - Set yourself away.\n              <b>/back</b> - Set yourself back from away.\n              <b>/buy</b> <i>command</i> - Buys an item from the shop.\n              <b>/customsymbol</b> <i>symbol</i> - Get a custom symbol.\n              <b>/define</b> <i>word</i> - Shows the definition of a word.\n              <b>/emotes</b> - Get a list of emoticons.\n              <b>/poof</b> - Disconnects the user and leaves a message in the room.\n              <b>/regdate</b> <i>user</i> - Shows registration date of the user.\n              <b>/resetsymbol</b> - Reset custom symbol if you have one.\n              <b>/shop</b> - Displays the shop.\n              <b>/transfer</b> <i>user</i>, <i>amount</i> - Transfer a certain amount of money to a user.\n              <b>/urbandefine</b> <i>word</i> - Shows the urban definition of the word.\n              <b>/wallet</b> <i>user</i> - Displays how much money a user has. Parameter is optional.\n              <b>/wulu</b> - Shows the version of wulu the server is using.\n              '.replace(/(\r\n|\n|\r)/gm, '<br>');
+
 function help() {
   var commands = {
-    serverhelp: 'commands',
-    wuluhelp: 'commands',
-    cmd: 'commands',
-    cmds: 'commands',
-    command: 'commands',
-    commands: function commands(target) {
+    serverhelp: 'wuluhelp',
+    cmds: 'wuluhelp',
+    wuluhelp: function wuluhelp(target) {
       if (!this.canBroadcast()) {
         return;
       }if (!target) {
-        this.sendReplyBox('<center><b>List of commands:</b></center>\n                          <b>/alias</b> <i>command</i> - Get all aliases of a command.\n                          <b>/away</b> - Set yourself away.\n                          <b>/back</b> - Set yourself back from away.\n                          <b>/buy</b> <i>command</i> - Buys an item from the shop.\n                          <b>/customsymbol</b> <i>symbol</i> - Get a custom symbol.\n                          <b>/define</b> <i>word</i> - Shows the definition of a word.\n                          <b>/emotes</b> - Get a list of emoticons.\n                          <b>/poof</b> - Disconnects the user and leaves a message in the room.\n                          <b>/regdate</b> <i>user</i> - Shows registration date of the user.\n                          <b>/resetsymbol</b> - Reset custom symbol if you have one.\n                          <b>/shop</b> - Displays the shop.\n                          <b>/transfer</b> <i>user</i>, <i>amount</i> - Transfer a certain amount of money to a user.\n                          <b>/urbandefine</b> <i>word</i> - Shows the urban definition of the word.\n                          <b>/wallet</b> <i>user</i> - Displays how much money a user has. Parameter is optional.\n                          <b>/wulu</b> - Shows the version of wulu the server is using.\n                          '.replace(/(\r\n|\n|\r)/gm, '<br>'));
+        this.sendReplyBox(display);
       }
     },
 
@@ -29,8 +28,8 @@ function help() {
         return;
       }if (!target) {
         return this.sendReply('/alias [command] - Get all aliases of a command.');
-      }if (check(['serverhelp', 'wuluhelp', 'command', 'commands', 'cmd', 'cmds'], target)) {
-        return this.sendReply('/serverhelp, /wuluhelp, /command, /commands, /cmd, /cmds');
+      }if (check(['serverhelp', 'wuluhelp', 'cmds'], target)) {
+        return this.sendReply('/serverhelp, /wuluhelp, /cmds');
       }
       if (check(['emotes', 'emoticons'], target)) {
         return this.sendReply('/emotes, /emoticons');

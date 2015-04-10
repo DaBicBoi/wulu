@@ -13,7 +13,6 @@ let shop_data = [
 ];
 
 let global_shop = getShopDisplay(shop_data);
-let currency_name = Economy.currency_name;
 
 /**
  * Shop where user can buy stuff with money.
@@ -37,6 +36,7 @@ function shop(shop=shop_data) {
           if (target.toLowerCase() !== shop[len][0].toLowerCase()) continue;
           match = true;
           let price = shop[len][2];
+          let currency_name = Wulu.Economy.currency_name;
           let item_currency = (price - money) >= 2 ? currency_name + 's' : currency_name;
           if (price > money) {
             return self.sendReply(`You don't have enough money for this. You need ${price - money} ${item_currency} more to buy ${target}.`);
@@ -64,10 +64,11 @@ function shop(shop=shop_data) {
       if (!user.canCustomSymbol) return this.sendReply('You need to buy this item from the shop.');
       if (!target || target.length > 1) return this.sendReply('/customsymbol [symbol] - Get a custom symbol.');
       if (target.match(/[A-Za-z\d]+/g) || '?!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('Sorry, but you cannot change your symbol to this for safety/stability reasons.');
+      user.customSymbol = target;
       user.oldGetIdentity = user.getIdentity;
       user.getIdentity = function(roomid) {
         let name = this.oldGetIdentity(roomid);
-        return target + name.slice(1);
+        return this.customSymbol + name.slice(1);
       };
       user.updateIdentity();
       user.canCustomSymbol = false;
@@ -79,6 +80,7 @@ function shop(shop=shop_data) {
       user.getIdentity = function(roomid) {
         return this.oldGetIdentity(roomid);
       };
+      user.customSymbol = null;
       user.updateIdentity();
       user.hasCustomSymbol = false;
       this.sendReply('Your symbol has been reset.');

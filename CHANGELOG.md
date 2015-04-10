@@ -1,3 +1,36 @@
+
+=======
+1.9.1 / 2015-04-09
+==================
+
+  * Fix lint errors
+
+1.9.0 / 2015-04-09
+==================
+
+  * Update css for emoticons to perfectly mimic regular chat
+  * Emoticon `xa` -> `xD`
+  * Fix pming when using emoticons
+  * Fix Economy currency_name not changing
+  * Add feelspink and Sanic emoticons
+
+1.8.0 / 2015-04-09
+==================
+
+  * Fix Chatrooms and Avatars not showing up
+  * Restore back original Pokemon Showdown files
+  * Remove /cmd command because it cause chatrooms and avatars to not show up
+
+1.7.0 / 2015-04-09
+==================
+
+  * Add __FakeSloth__ emoticon
+  * Add /pmall and /clearall commands
+  * dev-deps: gulp-jscs@~1.5.1
+  * Fix emoticon chat css
+  * Fix custom symbol not showing up when using emoticons
+
+
 1.6.2 / 2015-04-05
 ==================
 

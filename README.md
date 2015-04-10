@@ -1,6 +1,6 @@
 # wulu [![Version][version]][changelog] [![Build Status][travis-img]][travis-link] [![Dependency Status][deps-img]][deps-link] [![devDependency Status][dev-img]][dev-link]
 
-[version]: https://img.shields.io/badge/version-1.6.2-orange.svg
+[version]: https://img.shields.io/badge/version-1.9.1-blue.svg
 [changelog]: https://github.com/FakeSloth/wulu/blob/master/CHANGELOG.md
 [travis-img]: https://travis-ci.org/FakeSloth/wulu.svg?branch=master
 [travis-link]: https://travis-ci.org/FakeSloth/wulu
@@ -62,7 +62,7 @@ Wulu is contain in modules. Currently, there are 4 modules: `Bot`, `Mongo`,
 To set a __currency_name__ for you Economy, do this:
 
 ```js
-Wulu.Economy.currency_name = 'goats';
+Wulu.Economy.currency_name = 'goat';
 ```
 
 ### Mongo
@@ -154,8 +154,14 @@ To make the username look like the chat when using emoticons, put this in your c
   background: none;
   border: 0;
   padding: 0 5px 0 0;
-  cursor: pointer;
   font-family: Verdana;
+  font-size: 9pt;
+}
+.emote-chat:focus {
+  outline: none;
+}
+.emote-pointer {
+  cursor: pointer;
 }
 ```
 

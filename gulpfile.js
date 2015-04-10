@@ -4,9 +4,11 @@ var util = require('util');
 var gulp = require('gulp');
 var lazypipe = require('lazypipe');
 var merge = require('merge-stream');
+var cache = require('gulp-cache');
 var jscs = require('gulp-jscs');
 var jshint = require('gulp-jshint');
 var replace = require('gulp-replace');
+var FileCache = require('cache-swap');
 var jshintStylish = require('./' + path.relative(__dirname, require('jshint-stylish')));
 
 var globals = {};
@@ -27,8 +29,19 @@ function transformLet () {
 }
 
 function lint (jsHintOptions, jscsOptions) {
+	function cachedJsHint () {
+		return cache(jshint(jsHintOptions, {timeout: 450000}), {
+			success: function (file) {
+				return file.jshint.success;
+			},
+			value: function (file) {
+				return {jshint: file.jshint};
+			},
+			fileCache: new FileCache({tmpDir: '.', cacheDirName: 'gulp-cache'})
+		});
+	}
 	return lazypipe()
-		.pipe(jshint.bind(jshint, jsHintOptions, {timeout: 450000}))
+		.pipe(cachedJsHint)
 		.pipe(jscs.bind(jscs, jscsOptions))();
 }
 
@@ -144,7 +157,7 @@ jscsOptions.dataCompactAllIndented = util._extend(util._extend({}, jscsOptions.d
 
 var lintData = [
 	{
-		dirs: ['./*.js', './tournaments/*.js', './config/!(config).js', './data/scripts.js', './data/rulesets.js', './data/statuses.js', './mods/*/scripts.js', './mods/*/rulesets.js', './mods/*/statuses.js'],
+		dirs: ['./*.js', './tournaments/*.js', './chat-plugins/*.js', './config/!(config).js', './data/scripts.js', './data/rulesets.js', './data/statuses.js', './mods/*/scripts.js', './mods/*/rulesets.js', './mods/*/statuses.js'],
 		jsHint: jsHintOptions.base,
 		jscs: jscsOptions.base
 	}, {
