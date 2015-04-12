@@ -30,7 +30,19 @@ var commands = exports.commands = {
 
 		return '/me ' + target;
 	},
-
+	euros: 'wallet',
+	rubles: 'wallet',
+	rupees: 'wallet',
+	coins: 'wallet',
+	gold: 'wallet',
+	paper: 'wallet',
+	munny: 'wallet',
+	cash: 'wallet',
+	swag: 'wallet',
+	pasta: 'wallet',
+	dinero: 'wallet',
+	money: 'wallet',
+	bucks: 'wallet',
 	mee: function (target, room, user, connection) {
 		// By default, /mee allows a blank message
 		if (target) target = this.canTalk(target);
