@@ -12,9 +12,11 @@ let display = `<center><b>List of commands:</b></center>
               <b>/customsymbol</b> <i>symbol</i> - Get a custom symbol.
               <b>/define</b> <i>word</i> - Shows the definition of a word.
               <b>/emotes</b> - Get a list of emoticons.
+              <b>/moneyladder</b> - Shows the richest users.
               <b>/poof</b> - Disconnects the user and leaves a message in the room.
               <b>/regdate</b> <i>user</i> - Shows registration date of the user.
               <b>/resetsymbol</b> - Reset custom symbol if you have one.
+              <b>/seen</b> <i>username</i> - Shows when the user last connected on the server.
               <b>/shop</b> - Displays the shop.
               <b>/transfer</b> <i>user</i>, <i>amount</i> - Transfer a certain amount of money to a user.
               <b>/urbandefine</b> <i>word</i> - Shows the urban definition of the word.
@@ -59,6 +61,12 @@ function help() {
       }
       if (check(['pmall', 'masspm'], target)) {
         return this.sendReply('/pmall, /masspm');
+      }
+      if (check(['resetsymbol', 'resetcustomsymbol'], target)) {
+        return this.sendReply('/resetsymbol, /resetcustomsymbol');
+      }
+      if (check(['richestuser', 'richestusers', 'moneyladder', 'richladder'], target)) {
+        return this.sendReply('/richestuser, /richestusers, /moneyladder, /richladder');
       }
       this.sendReply('Alias not found for this command');
     }

@@ -1,5 +1,34 @@
 
+
 =======
+=======
+1.10.0
+==================
+
+  * Add permanent custom symbol
+  * Add stafflist, hide, seen, and richestusers command
+  * Add and remove some emoticons
+  * Add customavatars
+  * Refactor shop and create new module called `UserMod` for custom
+  symbols, hiding, and seen
+  * Fix emoticons parsing when using commands
+  * Seperate users Mongo collections into users and usergroups
+    - usernames are now userids in the users collections
+  * dev-deps: eslint@^0.19.0
+
+1.9.3 / 2015-04-09
+==================
+
+  * Escape HTML in Poll and reset Poll in room just created
+  * Refactor away command
+
+1.9.2 / 2015-04-09
+==================
+
+  * Fix shop buy command for usernames with spaces
+  * Fix message limit for emoticons
+  * Fix grammatical error of plural noun when specifying quantity zero
+
 1.9.1 / 2015-04-09
 ==================
 

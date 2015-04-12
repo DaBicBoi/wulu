@@ -429,10 +429,9 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 require('./repl.js').start('app', function (cmd) { return eval(cmd); });
 
 //Wulu.Economy.currency_name = 'goat';
+Wulu.UserMod();
 Wulu.Commands.init();
 Wulu.Emoticons();
 Wulu.Tour();
 global.Poll = Wulu.Poll();
-
-Wulu.Sysop(['creaturephil', 'dabicboi'])
-
+Wulu.Sysop(Config.sysops);

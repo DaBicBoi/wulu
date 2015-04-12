@@ -1,6 +1,6 @@
 # wulu [![Version][version]][changelog] [![Build Status][travis-img]][travis-link] [![Dependency Status][deps-img]][deps-link] [![devDependency Status][dev-img]][dev-link]
 
-[version]: https://img.shields.io/badge/version-1.9.1-blue.svg
+[version]: https://img.shields.io/badge/version-1.9.3-blue.svg
 [changelog]: https://github.com/FakeSloth/wulu/blob/master/CHANGELOG.md
 [travis-img]: https://travis-ci.org/FakeSloth/wulu.svg?branch=master
 [travis-link]: https://travis-ci.org/FakeSloth/wulu
@@ -156,12 +156,6 @@ To make the username look like the chat when using emoticons, put this in your c
   padding: 0 5px 0 0;
   font-family: Verdana;
   font-size: 9pt;
-}
-.emote-chat:focus {
-  outline: none;
-}
-.emote-pointer {
-  cursor: pointer;
 }
 ```
 

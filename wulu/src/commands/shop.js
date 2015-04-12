@@ -1,4 +1,5 @@
 import Economy from '../economy';
+import User from '../user';
 
 export default shop;
 
@@ -6,9 +7,9 @@ let shop_data = [
   ['Symbol', 'Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary until restart, certain symbols are blocked)', 5],
   ['Fix', 'Buys the ability to alter your current custom avatar or trainer card. (don\'t buy if you have neither)', 10],
   ['Poof', 'Buy a poof message to be added into the pool of possible poofs.', 15],
-  ['Who', 'Buys a custom whois bot message for your name.', 25],
   ['Avatar', 'Buys an custom avatar to be applied to your name (You supply. Images larger than 80x80 may not show correctly)', 30],
   ['Trainer', 'Buys a trainer card which shows information through a command.', 50],
+  ['PermaSymbol', 'Buys a permanent custom symbol.', 80],
   ['Room', 'Buys a chatroom for you to own. (within reason, can be refused)', 100]
 ];
 
@@ -30,25 +31,34 @@ function shop(shop=shop_data) {
     buy(target, room, user) {
       if (!target) return this.sendReply('/buy [command] - Buys an item from the shop.');
       let self = this;
-      Economy.get(user.userid, function(money) {
+      Economy.get(user.name.toLowerCase(), function(money) {
         let len = shop.length, match;
         while(len--) {
           if (target.toLowerCase() !== shop[len][0].toLowerCase()) continue;
           match = true;
           let price = shop[len][2];
           let currency_name = Wulu.Economy.currency_name;
-          let item_currency = (price - money) >= 2 ? currency_name + 's' : currency_name;
+          let item_currency = (price - money) !== 1 ? currency_name + 's' : currency_name;
           if (price > money) {
             return self.sendReply(`You don't have enough money for this. You need ${price - money} ${item_currency} more to buy ${target}.`);
           }
           Economy.take(user.userid, price, function(money) {
-            let currency = money >= 2 ? currency_name + 's' : currency_name;
+            let currency = money !== 1 ? currency_name + 's' : currency_name;
             self.sendReply(`You have bought ${target} for ${price} ${item_currency}. You now have ${money} ${currency} left.`);
             if (target.toLowerCase() === 'symbol') {
               user.canCustomSymbol = true;
               self.sendReply(`You have purchased a custom symbol. You can use /customsymbol to get your custom symbol.
                               You will have this until you log off for more than an hour.
                               If you do not want your custom symbol anymore, you may use /resetsymbol to go back to your old symbol.`);
+            } else if (target.toLowerCase() === 'permasymbol') {
+              user.canPermaCustomSymbol = true;
+              self.sendReply('You have purchased a permanent custom symbol. Use /permacustomsymbol to get your permanent custom symbol.');
+            } else {
+              for (let i in Users.users) {
+                if (Users.users[i].group === '~') {
+                  Users.users[i].send(`|pm|~Shop Alert|${Users.users[i].getIdentity()}|${user.name} has bought ${target}.`);
+                }
+              }
             }
           });
           room.add(`${user.name} has bought ${target} from the shop.`);
@@ -65,25 +75,43 @@ function shop(shop=shop_data) {
       if (!target || target.length > 1) return this.sendReply('/customsymbol [symbol] - Get a custom symbol.');
       if (target.match(/[A-Za-z\d]+/g) || '?!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('Sorry, but you cannot change your symbol to this for safety/stability reasons.');
       user.customSymbol = target;
-      user.oldGetIdentity = user.getIdentity;
-      user.getIdentity = function(roomid) {
-        let name = this.oldGetIdentity(roomid);
-        return this.customSymbol + name.slice(1);
-      };
       user.updateIdentity();
       user.canCustomSymbol = false;
       user.hasCustomSymbol = true;
     },
 
+    resetcustomsymbol: 'resetsymbol',
     resetsymbol(target, room, user) {
-      if (!user.hasCustomSymbol) return this.sendReply('You don\'t have a custom symbol.');
-      user.getIdentity = function(roomid) {
-        return this.oldGetIdentity(roomid);
-      };
+      if (!user.hasCustomSymbol && !user.hasPermaCustomSymbol) return this.sendReply('You don\'t have a custom symbol.');
+      if (user.hasPermaCustomSymbol) {
+        User.findOne({name: user.userid}, function(err, user) {
+          if (err) return;
+          user.symbol = '';
+          user.save();
+        });
+        user.hasPermaCustomSymbol = false;
+      }
       user.customSymbol = null;
       user.updateIdentity();
       user.hasCustomSymbol = false;
       this.sendReply('Your symbol has been reset.');
+    },
+
+    permasymbol: 'permacustomsymbol',
+    permacustomsymbol(target, room, user) {
+      if (!user.canPermaCustomSymbol) return this.sendReply('You need to buy this item from the shop.');
+      if (target.length > 1) return this.sendReply('/permacustomsymbol [symbol] - Get a custom symbol.');
+      if (target.match(/[A-Za-z\d]+/g) || '?!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('Sorry, but you cannot change your symbol to this for safety/stability reasons.');
+      User.findOne({name: user.userid}, function(err, userModel) {
+        if (err) return;
+        if (!userModel) return;
+        userModel.symbol = target;
+        userModel.save();
+      });
+      user.customSymbol = target;
+      user.updateIdentity();
+      user.hasPermaCustomSymbol = true;
+      user.canPermaCustomSymbol = false;
     }
   };
 

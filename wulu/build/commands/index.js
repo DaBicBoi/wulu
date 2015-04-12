@@ -26,6 +26,10 @@ var _help = require('./help');
 
 var _help2 = _interopRequireWildcard(_help);
 
+var _hide = require('./hide');
+
+var _hide2 = _interopRequireWildcard(_hide);
+
 var _money = require('./money');
 
 var _money2 = _interopRequireWildcard(_money);
@@ -50,9 +54,17 @@ var _reload = require('./reload');
 
 var _reload2 = _interopRequireWildcard(_reload);
 
+var _seen = require('./seen');
+
+var _seen2 = _interopRequireWildcard(_seen);
+
 var _shop = require('./shop');
 
 var _shop2 = _interopRequireWildcard(_shop);
+
+var _stafflist = require('./stafflist');
+
+var _stafflist2 = _interopRequireWildcard(_stafflist);
 
 var _wulu = require('./wulu');
 
@@ -64,13 +76,16 @@ var commands = {
   define: _define2['default'],
   emoticons: _emoticons2['default'],
   help: _help2['default'],
+  hide: _hide2['default'],
   money: _money2['default'],
   pmall: _pmall2['default'],
   poof: _poof2['default'],
   poll: _poll2['default'],
   regdate: _regdate2['default'],
   reload: _reload2['default'],
+  seen: _seen2['default'],
   shop: _shop2['default'],
+  stafflist: _stafflist2['default'],
   wulu: _wulu2['default']
 };
 

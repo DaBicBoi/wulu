@@ -15,14 +15,8 @@ var _is = require('is_js');
 var _is2 = _interopRequireWildcard(_is);
 
 var emotes = {
-  '4Head': 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-76292ac622b0fc38-20x30.png',
-  BibleThump: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-f6c13c7fc0a5c93d-36x30.png',
-  BloodTrail: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-f124d3a96eff228a-41x28.png',
-  crtNova: 'http://static-cdn.jtvnw.net/jtv_user_pictures/emoticon-3227-src-77d12eca2603dde0-28x28.png',
-  crtSSoH: 'http://static-cdn.jtvnw.net/jtv_user_pictures/emoticon-3228-src-d4b613767d7259c4-28x28.png',
   FakeSloth: 'http://i.imgur.com/chqy1tA.png',
   feelsbd: 'http://i.imgur.com/YyEdmwX.png',
-  feelsbeard: 'http://i.imgur.com/fn01qci.png',
   feelsdd: 'http://i.imgur.com/fXtdLtV.png',
   feelsgd: 'http://i.imgur.com/Jf0n4BL.png',
   feelsgn: 'http://i.imgur.com/juJQh0J.png',
@@ -35,17 +29,19 @@ var emotes = {
   fukya: 'http://i.imgur.com/ampqCZi.gif',
   Kappa: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-ddc6e3a8732cb50f-25x28.png',
   niglol: 'http://i.imgur.com/SlzCghq.png',
+  Obama: 'http://i.imgur.com/rBA9M7A.png',
   oshit: 'http://i.imgur.com/yr5DjuZ.png',
   PJSalt: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-18be1a297459453f-36x30.png',
   Sanic: 'http://i.imgur.com/Y6etmna.png',
-  SwiftRage: 'http://static-cdn.jtvnw.net/jtv_user_pictures/chansub-global-emoticon-680b6b3887ef0d17-21x28.png',
-  wtf1: 'http://i.imgur.com/kwR8Re9.png',
+  wtfman: 'http://i.imgur.com/kwR8Re9.png',
   xD: 'http://i.imgur.com/V728AvL.png'
 };
 
 var emotes_keys = Object.keys(emotes);
 
 var patternRegex = createPatternRegex();
+
+var MAX_MESSAGE_LENGTH = 300;
 
 exports['default'] = {
   emotes: emotes,
@@ -66,7 +62,9 @@ function Emoticons() {
   }
 
   CommandParser.parse = function (message, room, user, connection, levelsDeep) {
-    if (message.substr(0, 3) === '/pm') return CommandParser.originalParse(message, room, user, connection, levelsDeep);
+    if (message.charAt(0) === '/' && message.charAt(1) !== '/' || message.charAt(0) === '!') {
+      return CommandParser.originalParse(message, room, user, connection, levelsDeep);
+    }
 
     var match = false;
     var len = emotes_keys.length;
@@ -79,6 +77,11 @@ function Emoticons() {
     }
 
     if (!match) return CommandParser.originalParse(message, room, user, connection, levelsDeep);
+
+    if (message.length > MAX_MESSAGE_LENGTH && !user.can('ignorelimits')) {
+      connection.popup('Your message is too long:\n\n' + message);
+      return false;
+    }
 
     // escape HTML
     message = Tools.escapeHTML(message);
@@ -95,7 +98,7 @@ function Emoticons() {
     // **bold**
     message = message.replace(/\*\*([^< ](?:[^<]*?[^< ])?)\*\*/g, '<b>$1</b>');
 
-    room.addRaw('<div class="chat"><small>' + (user.customSymbol || user.group) + '</small><button name="parseCommand" value="/user ' + user.name + '" class="emote-chat"><b><font class="emote-pointer" color="' + _color2['default'](user.userid) + '">' + user.name + ':</font></b></button><em class="mine">' + message + '</div>');
+    room.addRaw('<div class="chat"><small>' + user.getIdentity().charAt(0) + '</small><button name="parseCommand" value="/user ' + user.name + '" class="emote-chat"><b><font class="emote-pointer" color="' + _color2['default'](user.userid) + '">' + user.name + ':</font></b></button><em class="mine">' + message + '</div>');
 
     return false;
   };

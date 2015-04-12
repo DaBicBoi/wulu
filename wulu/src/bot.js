@@ -19,11 +19,12 @@ export default class Bot {
    * Create a new user that is the bot
    * and join the global room.
    *
+   * @param {String} ip
    * @return {Object} user
    */
 
-  connect() {
-    let connection = this.createConnection();
+  connect(ip='127.0.0.1') {
+    let connection = this.createConnection(ip);
     let user = new Users.User(connection);
     connection.user = user;
     this.setup(user, connection);
@@ -66,7 +67,8 @@ export default class Bot {
     user.avatar = this.avatar;
     user.group = this.group;
     user.authenticated = true;
-    user.isStaff = true;
+    user.registered = true;
+    if (user.group !== Config.groupsranking[0]) user.isStaff = true;
 
     this.rooms.forEach((room) => user.joinRoom(room, connection));
 
