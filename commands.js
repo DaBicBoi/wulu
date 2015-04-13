@@ -569,6 +569,11 @@ var commands = exports.commands = {
 		this.addModCommand("" + name + " was appointed Room Owner by " + user.name + ".");
 		room.onUpdateIdentity(targetUser);
 		Rooms.global.writeChatRoomData();
+		
+		room.auth[targetUser.userid] = '&';
+		this.addModCommand("" + name + " was appointed Room Leader by " + user.name + ".");
+		room.onUpdateIdentity(targetUser);
+		Rooms.global.writeChatRoomData();
 	},
 
 	roomdeowner: 'deroomowner',
