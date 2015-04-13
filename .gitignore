@@ -58,3 +58,6 @@ pip-log.txt
 config/config.js
 wulu/build/mongo.js
 
+config/commands.js
+static/
+config/commands.js

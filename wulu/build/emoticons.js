@@ -17,7 +17,7 @@ var _is2 = _interopRequireWildcard(_is);
 var emotes = {
   FakeSloth: 'http://i.imgur.com/chqy1tA.png',
   feelsbd: 'http://i.imgur.com/YyEdmwX.png',
-  feelsdd: 'http://i.imgur.com/fXtdLtV.png',
+ // feelsdd: 'http://i.imgur.com/fXtdLtV.png',
   feelsgd: 'http://i.imgur.com/Jf0n4BL.png',
   feelsgn: 'http://i.imgur.com/juJQh0J.png',
   feelsmd: 'http://i.imgur.com/DJHMdSw.png',
