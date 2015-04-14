@@ -14,7 +14,7 @@ export default {
  * @param {String} db
  */
 
-function connect_database(db='mongodb://dabicboi:XQnWXi1Hk4Fd@ds031278.mongolab.com:31278/infinite') {
+function connect_database(db='mongodb://localhost:27017/ps') {
   let url = process.env.MONGODB || db;
   mongoose.connect(url);
   mongoose.connection.on('error', () => console.error(chalk.red('MongoDB Connection Error. Make sure MongoDB is running.')) );
